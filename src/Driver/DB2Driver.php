@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace DoctrineDbalIbmi\Driver;
+use Doctrine\DBAL\Driver\IBMDB2\Connection;
+use DoctrineDbalIbmi\Driver\AbstractDB2Driver;
+use DoctrineDbalIbmi\Driver\DataSourceName;
 
 class DB2Driver extends AbstractDB2Driver
 {
@@ -37,7 +39,7 @@ class DB2Driver extends AbstractDB2Driver
         $username = null;
         $password = null;
 
-        return new DB2IBMiConnection($params, $username, $password, $driverOptions);
+        return new Connection($params, $username, $password, $driverOptions);
     }
 
     /**
