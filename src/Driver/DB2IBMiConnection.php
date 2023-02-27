@@ -10,7 +10,7 @@
 namespace DoctrineDbalIbmi\Driver;
 
 use Doctrine\DBAL\Driver\IBMDB2\DB2Exception;
-use Doctrine\DBAL\Driver\IBMDB2\Connection;
+use Doctrine\DBAL\Driver\IBMDB2\DB2Connection;
 
 /**
  * IBMi Db2 Connection.
@@ -19,7 +19,7 @@ use Doctrine\DBAL\Driver\IBMDB2\Connection;
  * @author Cassiano Vailati <c.vailati@esconsulting.it>
  * @author James Titcumb <james@asgrim.com>
  */
-class DB2IBMiConnection extends Connection
+class DB2IBMiConnection extends DB2Connection
 {
     /**
      * @var mixed[]
@@ -82,7 +82,7 @@ class DB2IBMiConnection extends Connection
      */
     public function getWrappedResourceHandle()
     {
-        $connProperty = new \ReflectionProperty(Connection::class, '_conn');
+        $connProperty = new \ReflectionProperty(DB2Connection::class, '_conn');
         $connProperty->setAccessible(true);
         $handle = $connProperty->getValue($this);
 

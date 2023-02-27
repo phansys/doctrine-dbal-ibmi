@@ -1,0 +1,10 @@
+<?php
+
+// For use with "pdo_odbc" extension.
+return [
+    'driverClass' => \DoctrineDbalIbmi\Driver\OdbcDriver::class,
+    'persistent' => false,
+    'dsn' => "DSN=*LOCAL;",
+    'username' => 'db2inst1',
+    'password' => 'Doctrine2018',
+];
