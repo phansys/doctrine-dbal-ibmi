@@ -4,7 +4,8 @@
 return [
     'driverClass' => \DoctrineDbalIbmi\Driver\OdbcDriver::class,
     'persistent' => false,
-    'dsn' => "DSN=*LOCAL;",
+    // 'dsn' => "DSN=*LOCAL;",
+    'dsn' => 'DRIVER={IBM i Access ODBC Driver};SYSTEM=127.0.0.1;DATABASE=doctrine;',
     'username' => 'db2inst1',
     'password' => 'Doctrine2018',
 ];
