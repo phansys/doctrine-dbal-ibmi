@@ -11,6 +11,9 @@ namespace DoctrineDbalIbmi\Driver;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver;
+use Doctrine\DBAL\Driver\API\ExceptionConverter as ExceptionConverterInterface;
+use Doctrine\DBAL\Driver\API\IBMDB2\ExceptionConverter;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use DoctrineDbalIbmi\Platform\DB2IBMiPlatform;
 use DoctrineDbalIbmi\Schema\DB2IBMiSchemaManager;
 
@@ -60,8 +63,13 @@ abstract class AbstractDB2Driver implements Driver
     /**
      * {@inheritdoc}
      */
-    public function getSchemaManager(Connection $conn)
+    public function getSchemaManager(Connection $conn, AbstractPlatform $platform)
     {
-        return new DB2IBMiSchemaManager($conn);
+        return new DB2IBMiSchemaManager($conn, $platform);
+    }
+
+    public function getExceptionConverter(): ExceptionConverterInterface
+    {
+        return new ExceptionConverter();
     }
 }

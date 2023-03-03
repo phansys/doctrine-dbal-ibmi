@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-use Doctrine\DBAL\Driver\IBMDB2\Connection;
+namespace DoctrineDbalIbmi\Driver;
+
+use Doctrine\DBAL\Driver\IBMDB2\Exception\ConnectionFailed;
 use DoctrineDbalIbmi\Driver\AbstractDB2Driver;
 use DoctrineDbalIbmi\Driver\DataSourceName;
 
@@ -16,30 +18,27 @@ class DB2Driver extends AbstractDB2Driver
     /**
      * {@inheritdoc}
      */
-    public function connect(array $params, $username = null, $password = null, array $driverOptions = [])
+    public function connect(array $params)
     {
-        if ('' === ($params['protocol'] ?? '')) {
-            $params['protocol'] = 'TCPIP';
-        }
-
-        if ('' === ($username ?? '')) {
-            $username = $params['user'] ?? null;
-        }
-
-        if ('' === ($password ?? '')) {
-            $password = $params['password'] ?? null;
-        }
-
-        $params['user'] = $username;
-        $params['password'] = $password;
+        $params['protocol'] = $params['protocol'] ?? 'TCPIP';
         $params['driver'] = '{IBM DB2 ODBC DRIVER}';
         $params['dbname'] = DataSourceName::fromConnectionParameters($params)->toString();
 
         unset($params['driver'], $params['user'], $params['password'], $params['host'], $params['port'], $params['protocol']);
-        $username = null;
-        $password = null;
 
-        return new Connection($params, $username, $password, $driverOptions);
+        $driverOptions = $params['driverOptions'] ?? [];
+
+        if ($params['persistent'] ?? false) {
+            $connection = \db2_pconnect($params['dbname'], null, null, $driverOptions);
+        } else {
+            $connection = \db2_connect($params['dbname'], null, null, $driverOptions);
+        }
+
+        if ($connection === false) {
+            throw ConnectionFailed::new();
+        }
+
+        return new DB2IBMiConnection($connection, $driverOptions);
     }
 
     /**
