@@ -18,7 +18,8 @@ abstract class AbstractDB2Driver implements Driver
      */
     public static function isIbmi()
     {
-        return (PHP_OS === static::SYSTEM_IBMI || PHP_OS === static::SYSTEM_IBMI_OS400);
+        return true;
+        // return (PHP_OS === static::SYSTEM_IBMI || PHP_OS === static::SYSTEM_IBMI_OS400);
     }
 
     /**

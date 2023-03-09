@@ -1,19 +1,16 @@
 <?php
 
-namespace DoctrineDbalIbmiTest\Platform;
+namespace DoctrineDbalIbmi\Tests\Platform;
 
-use DoctrineDbalIbmiTest\Bootstrap;
-use PHPUnit\Framework\TestCase;
+use DoctrineDbalIbmi\Driver\DB2Driver;
+use DoctrineDbalIbmi\Tests\AbstractTestCase;
 
-/**
- * @covers \DoctrineDbalIbmi\Platform\DB2IBMiPlatform
- */
-class DB2IBMiPlatformTest extends TestCase
+final class DB2IBMiPlatformTest extends AbstractTestCase
 {
     /**
      * @return iterable<mixed, array<int, string>>
      */
-    public function typeMappingProvider()
+    public function typeMappingProvider(): iterable
     {
         return [
             ['smallint', 'smallint'],
@@ -50,19 +47,15 @@ class DB2IBMiPlatformTest extends TestCase
     }
 
     /**
-     * @param string $dbType
-     * @param string $expectedMapping
+     * @requires ibm_db2
      *
      * @return void
      *
      * @dataProvider typeMappingProvider
      */
-    public function testTypeMappings($dbType, $expectedMapping)
+    public function testTypeMappings(string $dbType, string $expectedMapping)
     {
-        if (!extension_loaded('ibm_db2')) {
-            self::markTestSkipped('ibm_db2 extension not loaded');
-        }
-        $connection = Bootstrap::getConnection();
+        $connection = self::getConnection(DB2Driver::class);
         $platform = $connection->getDatabasePlatform();
 
         self::assertSame($expectedMapping, $platform->getDoctrineTypeMapping($dbType));
@@ -71,7 +64,7 @@ class DB2IBMiPlatformTest extends TestCase
     /**
      * @return iterable<mixed, array<int, string|array<string, int|bool>>>
      */
-    public function varcharTypeDeclarationProvider()
+    public function varcharTypeDeclarationProvider(): iterable
     {
         return [
             ['VARCHAR(1024)', ['length' => 1024]],
@@ -85,19 +78,15 @@ class DB2IBMiPlatformTest extends TestCase
     }
 
     /**
-     * @param string $expectedSql
-     * @param array $fieldDef
+     * @requires ibm_db2
      *
      * @return void
      *
      * @dataProvider varcharTypeDeclarationProvider
      */
-    public function testVarcharTypeDeclarationSQLSnippet($expectedSql, array $fieldDef)
+    public function testVarcharTypeDeclarationSQLSnippet(string $expectedSql, array $fieldDef)
     {
-        if (!extension_loaded('ibm_db2')) {
-            self::markTestSkipped('ibm_db2 extension not loaded');
-        }
-        $connection = Bootstrap::getConnection();
+        $connection = self::getConnection(DB2Driver::class);
         $platform = $connection->getDatabasePlatform();
 
         self::assertSame($expectedSql, $platform->getVarcharTypeDeclarationSQL($fieldDef));
