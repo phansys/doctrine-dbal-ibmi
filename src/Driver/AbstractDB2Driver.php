@@ -72,6 +72,7 @@ abstract class AbstractDB2Driver implements Driver, VersionAwarePlatformDriver
      */
     public function createDatabasePlatformForVersion($version)
     {
+        print_r(debug_backtrace());
         if (version_compare($this->getVersionNumber($version), '7.3', '>=')) {
             return $this->getDatabasePlatform();
         }
