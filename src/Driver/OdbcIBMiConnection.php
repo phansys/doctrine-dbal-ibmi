@@ -95,4 +95,10 @@ class OdbcIBMiConnection extends Connection
 
         return $handle;
     }
+
+    public function getServerVersion()
+    {
+        var_dump($this->getAttribute(\PDO::ATTR_SERVER_VERSION));
+        return $this->getAttribute(\PDO::ATTR_SERVER_VERSION);
+    }
 }
