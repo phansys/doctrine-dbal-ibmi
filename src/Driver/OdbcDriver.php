@@ -40,8 +40,9 @@ class OdbcDriver extends AbstractDB2Driver implements VersionAwarePlatformDriver
 
         $params['driver'] = '{IBM i Access ODBC Driver}';
         $params['dsn'] = 'odbc:'.DataSourceName::fromConnectionParameters($params)->toString();
+        $driverOptions = $params['driverOptions'] ?? [];
 
-        unset($params['driver'], $params['host'], $params['port'], $params['protocol']);
+        unset($params['driver'], $params['host'], $params['port'], $params['protocol'], $params['driverOptions']);
 
         if (! empty($params['persistent'])) {
             $driverOptions[\PDO::ATTR_PERSISTENT] = true;

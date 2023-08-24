@@ -29,9 +29,9 @@ class DB2Driver extends AbstractDB2Driver
         $driverOptions = $params['driverOptions'] ?? [];
 
         if ($params['persistent'] ?? false) {
-            $connection = \db2_pconnect($params['dbname'], null, null, $driverOptions);
+            $connection = \db2_pconnect($params['dbname'], '', '', $driverOptions);
         } else {
-            $connection = \db2_connect($params['dbname'], null, null, $driverOptions);
+            $connection = \db2_connect($params['dbname'], '', '', $driverOptions);
         }
 
         if ($connection === false) {

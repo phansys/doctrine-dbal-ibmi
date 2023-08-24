@@ -27,10 +27,10 @@ final class DB2DriverTest extends AbstractDriverTestCase
             [
                 'driverClass' => DB2Driver::class,
                 'persistent' => false,
-                'dbname' => 'DRIVER={IBM DB2 ODBC DRIVER};HOSTNAME=127.1.1.2;DATABASE=MY_DB;PORT=55000;PROTOCOL=SOCKETS;UID=me;PWD=53cr37',
+                'dbname' => 'DRIVER={IBM DB2 ODBC DRIVER};HOSTNAME=127.0.0.1;DATABASE=MY_DB;PORT=55000;PROTOCOL=TCPIP;UID=me;PWD=53cr37',
                 'user' => 'un',
                 'password' => 'known',
-                'protocol' => 'TCPIP',
+                'protocol' => 'SOCKETS',
                 'port' => 60000,
             ],
         ];
